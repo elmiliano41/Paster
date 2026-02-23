@@ -1,109 +1,122 @@
-# Paster - Clipboard Manager para macOS
+# Paster
 
-Un clipboard manager profesional y nativo para macOS, construido con SwiftUI.
+A modern, lightweight clipboard manager for macOS built with SwiftUI.
 
-## Requisitos
+![macOS](https://img.shields.io/badge/macOS-14.0+-blue)
+![Swift](https://img.shields.io/badge/Swift-5.9+-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-- **macOS 14.0** (Sonoma) o superior
-- Swift 5.10+ (viene con las Command Line Tools de Xcode)
+## Features
 
-## Compilar y Ejecutar
+- **Clipboard History** — Automatically saves everything you copy (text, images, links, files, code)
+- **Instant Search** — Quickly find any item in your clipboard history
+- **Smart Detection** — Automatically detects content type (URLs, code snippets, plain text)
+- **Syntax Highlighting** — Code snippets are displayed with proper syntax highlighting
+- **Image Preview** — View copied images directly in the app
+- **Link Preview** — See URL previews for copied links
+- **Pin Items** — Keep important clips always accessible
+- **Categories** — Organize clips with custom categories
+- **Floating Panel** — Access your clipboard history with `Cmd+Shift+V`
+- **Menu Bar App** — Lives quietly in your menu bar
+- **Auto Cleanup** — Optionally remove old clips after a configurable period
+- **Launch at Login** — Start automatically when you log in
 
-```bash
-cd /Users/emilianosanchez/Documents/Utilities/Paster
+## Screenshots
 
-# Compilar
-swift build
+<!-- Add screenshots here -->
 
-# Ejecutar
-swift run
-```
+## Installation
 
-La app aparece como un icono de clipboard en la **barra de menú** (arriba a la derecha).
+### Requirements
 
-Presiona **Cmd+Shift+V** desde cualquier lugar para abrir la ventana flotante.
+- macOS 14.0 (Sonoma) or later
 
-## Funcionalidades
+### Build from Source
 
-- **Historial de clipboard**: Todo lo que copias se guarda automáticamente
-- **Menu bar**: Acceso rápido desde la barra de menú
-- **Ventana flotante**: Activar con `Cmd+Shift+V` desde cualquier lugar
-- **Búsqueda instantánea**: Filtra tu historial en tiempo real
-- **Detección de tipos**: Texto, código, imágenes, enlaces, archivos
-- **Syntax highlighting**: Coloreado de código con detección automática de lenguaje
-- **Preview de contenido**: Vista previa de imágenes, links con metadata, código con números de línea
-- **Categorías**: Organiza tu historial con categorías personalizadas con iconos y colores
-- **Elementos fijados**: Fija los items que no quieras perder
-- **Persistencia en JSON**: Los datos se guardan en `~/Library/Application Support/Paster/`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/elmiliano41/Paster.git
+   cd Paster
+   ```
 
-## Estructura del proyecto
+2. Open in Xcode:
+   ```bash
+   open Paster.xcodeproj
+   ```
+
+3. Build and run (`Cmd+R`)
+
+## Usage
+
+### Quick Access
+
+Press `Cmd+Shift+V` to open the floating panel from anywhere.
+
+### Menu Bar
+
+Click the clipboard icon in the menu bar to access quick options.
+
+### Managing Clips
+
+- **Double-click** — Copy item back to clipboard
+- **Right-click** — Access context menu (copy, pin, delete)
+- **Pin** — Keep important items at the top
+
+### Settings
+
+Access settings from the menu bar icon → Settings, or use `Cmd+,`
+
+- **Max History Items** — Configure how many items to keep (50-5000)
+- **Auto Cleanup** — Automatically delete items older than 7/14/30/60/90 days
+- **Launch at Login** — Start Paster when you log in
+- **Custom Hotkey** — Change the keyboard shortcut
+
+## Architecture
 
 ```
 Paster/
-├── Package.swift                 # Configuración SPM
-├── README.md
-└── Paster/
-    ├── PasterApp.swift           # Entry point
-    ├── AppDelegate.swift         # NSApplicationDelegate
-    ├── Models/
-    │   ├── ClipItem.swift        # Modelo principal (Codable)
-    │   ├── Category.swift        # Categorías (Codable)
-    │   └── ClipItemType.swift    # Enum de tipos
-    ├── Services/
-    │   ├── DataStore.swift           # Persistencia JSON + queries
-    │   ├── ClipboardMonitor.swift    # Polling de NSPasteboard
-    │   ├── PasteService.swift        # Copiar/pegar al clipboard
-    │   ├── HotKeyManager.swift       # Atajos globales
-    │   ├── FloatingPanelManager.swift # Gestión ventana flotante
-    │   └── SyntaxDetector.swift      # Detección de lenguaje
-    ├── Views/
-    │   ├── MenuBar/
-    │   │   └── MenuBarView.swift
-    │   ├── FloatingPanel/
-    │   │   ├── FloatingPanelView.swift
-    │   │   ├── SearchBarView.swift
-    │   │   ├── ClipItemRow.swift
-    │   │   └── ClipItemDetail.swift
-    │   ├── Previews/
-    │   │   ├── TextPreview.swift
-    │   │   ├── CodePreview.swift
-    │   │   ├── ImagePreview.swift
-    │   │   └── LinkPreview.swift
-    │   ├── Settings/
-    │   │   ├── SettingsView.swift
-    │   │   ├── HotKeySettingsView.swift
-    │   │   └── CategoryManagement.swift
-    │   └── Components/
-    │       ├── CategoryBadge.swift
-    │       ├── PinButton.swift
-    │       ├── TimeAgoLabel.swift
-    │       └── ClipTypeIcon.swift
-    ├── Utils/
-    │   ├── Constants.swift
-    │   └── Extensions.swift
-    └── Resources/
-        └── Assets.xcassets
+├── PasterApp.swift          # App entry point
+├── AppDelegate.swift        # App lifecycle, floating panel management
+├── Models/
+│   ├── ClipItem.swift       # Clipboard item model
+│   ├── ClipItemType.swift   # Content type enum
+│   └── Category.swift       # Category model
+├── Services/
+│   ├── DataStore.swift      # Persistence layer (JSON)
+│   ├── ClipboardMonitor.swift # System clipboard monitoring
+│   ├── HotKeyManager.swift  # Global hotkey handling
+│   ├── PasteService.swift   # Copy/paste operations
+│   └── SyntaxDetector.swift # Code language detection
+├── Views/
+│   ├── FloatingPanel/       # Main floating panel UI
+│   ├── MenuBar/             # Menu bar views
+│   ├── Settings/            # Settings views
+│   ├── Previews/            # Content preview views
+│   └── Components/          # Reusable UI components
+└── Utils/
+    ├── Constants.swift      # App constants
+    └── Extensions.swift     # Swift extensions
 ```
 
-## Permisos necesarios
+## Tech Stack
 
-La app puede necesitar permisos de **Accesibilidad** para:
-- Registrar atajos de teclado globales (Cmd+Shift+V)
-- Simular la acción de pegar (Cmd+V) en otras apps
+- **SwiftUI** — Modern declarative UI framework
+- **Observation** — Swift's native observation framework (iOS 17+)
+- **AppKit** — NSPasteboard monitoring, NSPanel for floating window
+- **ServiceManagement** — Launch at login functionality
 
-Ve a **Preferencias del Sistema → Privacidad y Seguridad → Accesibilidad** y agrega el terminal o la app Paster.
+## Privacy
 
-## Dependencias
+Paster stores all clipboard data locally on your Mac in `~/Library/Application Support/Paster/`. No data is ever sent to external servers.
 
-| Paquete | Versión | Uso |
-|---------|---------|-----|
-| [soffes/HotKey](https://github.com/soffes/HotKey) | 0.2.1+ | Atajos de teclado globales |
+## Contributing
 
-## Datos
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Los datos se persisten como archivos JSON en:
-```
-~/Library/Application Support/Paster/
-├── clip_items.json
-└── categories.json
-```
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+## Author
+
+Made with SwiftUI by [elmiliano41](https://github.com/elmiliano41)

@@ -12,12 +12,12 @@ enum ClipItemType: String, Codable, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .text: "Texto"
-        case .code: "Código"
-        case .image: "Imagen"
-        case .link: "Enlace"
-        case .file: "Archivo"
-        case .richText: "Texto Enriquecido"
+        case .text: L("type.text")
+        case .code: L("type.code")
+        case .image: L("type.image")
+        case .link: L("type.link")
+        case .file: L("type.file")
+        case .richText: L("type.richText")
         }
     }
 

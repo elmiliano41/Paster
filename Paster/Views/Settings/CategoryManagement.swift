@@ -25,7 +25,7 @@ struct CategoryManagement: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Categorías")
+                Text(L("categories.title"))
                     .font(.system(size: 14, weight: .bold))
 
                 Spacer()
@@ -37,7 +37,7 @@ struct CategoryManagement: View {
                     }
                 } label: {
                     Label(
-                        isAddingNew ? "Cancelar" : "Nueva",
+                        isAddingNew ? L("categories.cancel") : L("categories.new"),
                         systemImage: isAddingNew ? "xmark" : "plus"
                     )
                     .font(.system(size: 12, weight: .medium))
@@ -56,10 +56,10 @@ struct CategoryManagement: View {
                     Image(systemName: "tag.slash")
                         .font(.system(size: 28))
                         .foregroundStyle(Color.secondary.opacity(0.3))
-                    Text("Sin categorías")
+                    Text(L("categories.noCategories"))
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("Crea categorías para organizar tu historial")
+                    Text(L("categories.createToOrganize"))
                         .font(.system(size: 11))
                         .foregroundStyle(Color.secondary.opacity(0.6))
                 }
@@ -80,12 +80,12 @@ struct CategoryManagement: View {
 
     private var addCategoryForm: some View {
         VStack(alignment: .leading, spacing: 12) {
-            TextField("Nombre de la categoría", text: $newName)
+            TextField(L("categories.categoryName"), text: $newName)
                 .textFieldStyle(.roundedBorder)
                 .font(.system(size: 13))
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Icono")
+                Text(L("categories.icon"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.secondary)
 
@@ -109,7 +109,7 @@ struct CategoryManagement: View {
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Color")
+                Text(L("categories.color"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.secondary)
 
@@ -135,7 +135,7 @@ struct CategoryManagement: View {
             Button {
                 saveCategory()
             } label: {
-                Text("Guardar categoría")
+                Text(L("categories.saveCategory"))
                     .font(.system(size: 12, weight: .medium))
                     .frame(maxWidth: .infinity)
             }
@@ -162,7 +162,7 @@ struct CategoryManagement: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(category.name)
                     .font(.system(size: 13, weight: .medium))
-                Text("\(dataStore.itemCount(for: category)) elementos")
+                Text("\(dataStore.itemCount(for: category)) \(L("items.count"))")
                     .font(.system(size: 10))
                     .foregroundStyle(.secondary)
             }
@@ -179,7 +179,7 @@ struct CategoryManagement: View {
                     .foregroundStyle(.red.opacity(0.6))
             }
             .buttonStyle(.plain)
-            .help("Eliminar categoría")
+            .help(L("categories.deleteCategory"))
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)

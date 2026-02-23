@@ -1,0 +1,130 @@
+/* 
+  Localizable.strings (English)
+  Paster
+*/
+
+// MARK: - General
+"app.name" = "Paster";
+"items.count" = "items";
+
+// MARK: - Content Types
+"type.text" = "Text";
+"type.code" = "Code";
+"type.image" = "Image";
+"type.link" = "Link";
+"type.file" = "File";
+"type.richText" = "Rich Text";
+
+// MARK: - Floating Panel
+"search.placeholder" = "Search…";
+"section.pinned" = "PINNED";
+"section.recent" = "RECENT";
+"panel.selectItem" = "Select an item";
+"panel.toPreview" = "to see the preview";
+"filter.all" = "All";
+
+// MARK: - Context Menu & Actions
+"action.copy" = "Copy";
+"action.copyAndPaste" = "Copy and Paste";
+"action.paste" = "Paste";
+"action.pin" = "Pin";
+"action.unpin" = "Unpin";
+"action.delete" = "Delete";
+"action.clear" = "Clear";
+
+// MARK: - Clip Item
+"clip.imageCopied" = "Copied image";
+"clip.doubleClickToCopy" = "Double-click to copy";
+"clip.clickToCopy" = "Click to copy";
+
+// MARK: - Menu Bar
+"menubar.openPaster" = "Open Paster";
+"menubar.searchHistory" = "Search history…";
+"menubar.noContent" = "No content yet";
+"menubar.copyAndAppear" = "Copy something and it will appear here";
+"menubar.emptyHistory" = "Empty history. Copy something and it will appear here.";
+
+// MARK: - Settings
+"settings.general" = "General";
+"settings.shortcuts" = "Shortcuts";
+"settings.categories" = "Categories";
+"settings.about" = "About";
+
+// MARK: - Settings > General
+"settings.behavior" = "Behavior";
+"settings.launchAtLogin" = "Launch at login";
+"settings.showPreview" = "Show preview in floating panel";
+"settings.history" = "History";
+"settings.maxItems" = "Maximum items";
+"settings.autoCleanup" = "Auto cleanup";
+"settings.autoCleanup.never" = "Never";
+"settings.autoCleanup.days" = "days";
+"settings.clearAllHistory" = "Clear all history";
+"settings.advanced" = "Advanced";
+"settings.monitoringInterval" = "Monitoring interval";
+"settings.language" = "Language";
+"settings.languageNote" = "Restart the app for the language change to take full effect.";
+
+// MARK: - Settings > Shortcuts
+"shortcuts.openPaster" = "Open Paster";
+"shortcuts.openPasterDesc" = "Press this shortcut anywhere to open Paster's floating window.";
+"shortcuts.globalShortcut" = "Global shortcut";
+"shortcuts.keyboardShortcuts" = "Keyboard shortcuts";
+"shortcuts.recording" = "Recording…";
+"shortcuts.clickToChange" = "Click to change shortcut";
+"shortcuts.openCloseWindow" = "Open/close floating window";
+"shortcuts.copyAuto" = "Copy (automatically saved)";
+"shortcuts.copySelected" = "Copy selected item";
+"shortcuts.copyAndPasteItem" = "Copy and paste item";
+"shortcuts.closeWindow" = "Close window";
+"shortcuts.deleteSelected" = "Delete selected item";
+"shortcuts.focusSearch" = "Focus search";
+"shortcuts.navigateHistory" = "Navigate history";
+"shortcuts.permissions" = "Permissions";
+"shortcuts.accessibilityPermissions" = "Accessibility permissions";
+"shortcuts.accessibilityDesc" = "Paster needs accessibility permissions to register global shortcuts and simulate paste actions. Go to System Settings → Privacy & Security → Accessibility.";
+"shortcuts.openAccessibility" = "Open Accessibility Settings";
+
+// MARK: - Settings > Categories
+"categories.title" = "Categories";
+"categories.new" = "New";
+"categories.cancel" = "Cancel";
+"categories.noCategories" = "No categories";
+"categories.createToOrganize" = "Create categories to organize your history";
+"categories.categoryName" = "Category name";
+"categories.icon" = "Icon";
+"categories.color" = "Color";
+"categories.saveCategory" = "Save category";
+"categories.deleteCategory" = "Delete category";
+"categories.itemsCount" = "%lld items";
+
+// MARK: - Settings > About
+"about.clipboardManager" = "Clipboard Manager for macOS";
+"about.version" = "Version";
+"about.feature.history" = "Complete clipboard history";
+"about.feature.search" = "Instant search";
+"about.feature.syntax" = "Syntax highlighting for code";
+"about.feature.preview" = "Image and link preview";
+"about.feature.shortcut" = "Quick access with Cmd+Shift+V";
+"about.feature.categories" = "Customizable categories";
+"about.madeWith" = "Made with SwiftUI";
+
+// MARK: - Clip Item Detail
+"detail.info" = "Information";
+"detail.type" = "Type";
+"detail.size" = "Size";
+"detail.date" = "Date";
+"detail.language" = "Language";
+"detail.source" = "Source";
+"detail.category" = "Category";
+"detail.noCategory" = "No category";
+
+// MARK: - Time Ago (if applicable)
+"time.now" = "Just now";
+"time.minutesAgo" = "%lld min ago";
+"time.hoursAgo" = "%lld h ago";
+"time.daysAgo" = "%lld d ago";
+
+// MARK: - Panel
+"panel.hidePreview" = "Hide preview";
+"panel.showPreview" = "Show preview";

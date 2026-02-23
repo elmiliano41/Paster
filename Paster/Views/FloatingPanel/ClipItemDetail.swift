@@ -46,7 +46,7 @@ struct ClipItemDetail: View {
                     .foregroundStyle(item.isPinned ? .orange : .secondary)
             }
             .buttonStyle(.plain)
-            .help(item.isPinned ? "Desfijar" : "Fijar")
+            .help(item.isPinned ? L("action.unpin") : L("action.pin"))
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -72,26 +72,26 @@ struct ClipItemDetail: View {
 
     private var metadataView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Información")
+            Text(L("detail.info"))
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(.secondary)
 
             VStack(spacing: 6) {
-                metadataRow("Tipo", value: item.type.displayName)
-                metadataRow("Tamaño", value: contentSize)
-                metadataRow("Fecha", value: item.timestamp.formatted(date: .abbreviated, time: .shortened))
+                metadataRow(L("detail.type"), value: item.type.displayName)
+                metadataRow(L("detail.size"), value: contentSize)
+                metadataRow(L("detail.date"), value: item.timestamp.formatted(date: .abbreviated, time: .shortened))
 
                 if let lang = item.detectedLanguage {
-                    metadataRow("Lenguaje", value: lang)
+                    metadataRow(L("detail.language"), value: lang)
                 }
 
                 if let app = item.sourceApp {
-                    metadataRow("Origen", value: appName(from: app))
+                    metadataRow(L("detail.source"), value: appName(from: app))
                 }
 
                 // Category picker
                 HStack {
-                    Text("Categoría")
+                    Text(L("detail.category"))
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                         .frame(width: 80, alignment: .leading)
@@ -102,7 +102,7 @@ struct ClipItemDetail: View {
                             dataStore.setCategory(newId, for: item)
                         }
                     )) {
-                        Text("Sin categoría").tag(nil as UUID?)
+                        Text(L("detail.noCategory")).tag(nil as UUID?)
                         ForEach(dataStore.categories) { category in
                             Label(category.name, systemImage: category.icon)
                                 .tag(category.id as UUID?)
@@ -139,7 +139,7 @@ struct ClipItemDetail: View {
             Button {
                 PasteService.copyToClipboard(item)
             } label: {
-                Label("Copiar", systemImage: "doc.on.doc")
+                Label(L("action.copy"), systemImage: "doc.on.doc")
                     .font(.system(size: 12, weight: .medium))
             }
             .buttonStyle(.borderedProminent)
@@ -149,7 +149,7 @@ struct ClipItemDetail: View {
             Button {
                 PasteService.copyAndPaste(item)
             } label: {
-                Label("Pegar", systemImage: "doc.on.clipboard")
+                Label(L("action.paste"), systemImage: "doc.on.clipboard")
                     .font(.system(size: 12, weight: .medium))
             }
             .buttonStyle(.bordered)

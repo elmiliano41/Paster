@@ -66,7 +66,7 @@ struct FloatingPanelView: View {
                     .font(.system(size: 14))
                     .foregroundStyle(.secondary)
 
-                TextField("Buscar…", text: $searchText)
+                TextField(L("search.placeholder"), text: $searchText)
                     .textFieldStyle(.plain)
                     .font(.system(size: 14))
                     .focused($isSearchFocused)
@@ -96,7 +96,7 @@ struct FloatingPanelView: View {
                     .foregroundStyle(.secondary)
             }
             .buttonStyle(.plain)
-            .help(showingDetail ? "Ocultar vista previa" : "Mostrar vista previa")
+            .help(showingDetail ? L("panel.hidePreview") : L("panel.showPreview"))
 
             Text("\(filteredItems.count)")
                 .font(.system(size: 11, weight: .medium, design: .rounded))
@@ -116,7 +116,7 @@ struct FloatingPanelView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 6) {
                 FilterChip(
-                    title: "Todo",
+                    title: L("filter.all"),
                     icon: "tray.full",
                     isSelected: selectedTypeFilter == nil
                 ) {
@@ -152,7 +152,7 @@ struct FloatingPanelView: View {
         ScrollView {
             LazyVStack(spacing: 2) {
                 if !pinnedItems.isEmpty {
-                    sectionLabel("FIJADOS", icon: "pin.fill")
+                    sectionLabel(L("section.pinned"), icon: "pin.fill")
                     ForEach(pinnedItems) { item in
                         clipRow(item)
                     }
@@ -160,7 +160,7 @@ struct FloatingPanelView: View {
 
                 if !unpinnedItems.isEmpty {
                     if !pinnedItems.isEmpty {
-                        sectionLabel("RECIENTES", icon: "clock")
+                        sectionLabel(L("section.recent"), icon: "clock")
                     }
                     ForEach(unpinnedItems) { item in
                         clipRow(item)
@@ -222,10 +222,10 @@ struct FloatingPanelView: View {
                     Image(systemName: "cursorarrow.click.2")
                         .font(.system(size: 36))
                         .foregroundStyle(Color.secondary.opacity(0.3))
-                    Text("Selecciona un elemento")
+                    Text(L("panel.selectItem"))
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("para ver la vista previa")
+                    Text(L("panel.toPreview"))
                         .font(.system(size: 12))
                         .foregroundStyle(Color.secondary.opacity(0.5))
                 }
@@ -242,13 +242,13 @@ struct FloatingPanelView: View {
         Button {
             PasteService.copyToClipboard(item)
         } label: {
-            Label("Copiar", systemImage: "doc.on.doc")
+            Label(L("action.copy"), systemImage: "doc.on.doc")
         }
 
         Button {
             PasteService.copyAndPaste(item)
         } label: {
-            Label("Copiar y Pegar", systemImage: "doc.on.clipboard")
+            Label(L("action.copyAndPaste"), systemImage: "doc.on.clipboard")
         }
 
         Divider()
@@ -257,7 +257,7 @@ struct FloatingPanelView: View {
             withAnimation { dataStore.togglePin(item) }
         } label: {
             Label(
-                item.isPinned ? "Desfijar" : "Fijar",
+                item.isPinned ? L("action.unpin") : L("action.pin"),
                 systemImage: item.isPinned ? "pin.slash" : "pin"
             )
         }
@@ -272,7 +272,7 @@ struct FloatingPanelView: View {
                 }
             }
         } label: {
-            Label("Eliminar", systemImage: "trash")
+            Label(L("action.delete"), systemImage: "trash")
         }
     }
 }

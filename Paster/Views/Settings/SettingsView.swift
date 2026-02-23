@@ -8,16 +8,27 @@ struct SettingsView: View {
     @AppStorage(AppConstants.Defaults.autoStartKey) private var autoStart = false
     @AppStorage(AppConstants.Defaults.showPreviewKey) private var showPreview = true
     @AppStorage(AppConstants.Defaults.autoCleanupDays) private var autoCleanupDays = 30
+    @AppStorage(AppConstants.Defaults.appLanguage) private var appLanguage = "system"
 
     @State private var selectedTab: SettingsTab = .general
+    @State private var selectedLanguage: AppLanguage = LocalizationManager.shared.currentLanguage
 
     enum SettingsTab: String, CaseIterable, Identifiable {
-        case general = "General"
-        case shortcuts = "Atajos"
-        case categories = "Categorías"
-        case about = "Acerca de"
+        case general
+        case shortcuts
+        case categories
+        case about
 
         var id: String { rawValue }
+
+        var displayName: String {
+            switch self {
+            case .general: L("settings.general")
+            case .shortcuts: L("settings.shortcuts")
+            case .categories: L("settings.categories")
+            case .about: L("settings.about")
+            }
+        }
 
         var icon: String {
             switch self {
@@ -33,25 +44,25 @@ struct SettingsView: View {
         TabView(selection: $selectedTab) {
             generalTab
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label(L("settings.general"), systemImage: "gear")
                 }
                 .tag(SettingsTab.general)
 
             shortcutsTab
                 .tabItem {
-                    Label("Atajos", systemImage: "keyboard")
+                    Label(L("settings.shortcuts"), systemImage: "keyboard")
                 }
                 .tag(SettingsTab.shortcuts)
 
             categoriesTab
                 .tabItem {
-                    Label("Categorías", systemImage: "tag")
+                    Label(L("settings.categories"), systemImage: "tag")
                 }
                 .tag(SettingsTab.categories)
 
             aboutTab
                 .tabItem {
-                    Label("Acerca de", systemImage: "info.circle")
+                    Label(L("settings.about"), systemImage: "info.circle")
                 }
                 .tag(SettingsTab.about)
         }
@@ -63,51 +74,63 @@ struct SettingsView: View {
     private var generalTab: some View {
         Form {
             Section {
-                Toggle("Iniciar al arrancar", isOn: $autoStart)
+                Toggle(L("settings.launchAtLogin"), isOn: $autoStart)
                     .onChange(of: autoStart) { _, newValue in
                         setAutoStart(newValue)
                     }
 
-                Toggle("Mostrar vista previa en panel flotante", isOn: $showPreview)
+                Toggle(L("settings.showPreview"), isOn: $showPreview)
             } header: {
-                Text("Comportamiento")
+                Text(L("settings.behavior"))
             }
 
             Section {
                 Stepper(
-                    "Máximo de elementos: \(maxHistory)",
+                    "\(L("settings.maxItems")): \(maxHistory)",
                     value: $maxHistory,
                     in: 50...5000,
                     step: 50
                 )
 
-                Picker("Limpieza automática", selection: $autoCleanupDays) {
-                    Text("Nunca").tag(0)
-                    Text("7 días").tag(7)
-                    Text("14 días").tag(14)
-                    Text("30 días").tag(30)
-                    Text("60 días").tag(60)
-                    Text("90 días").tag(90)
+                Picker(L("settings.autoCleanup"), selection: $autoCleanupDays) {
+                    Text(L("settings.autoCleanup.never")).tag(0)
+                    Text("7 \(L("settings.autoCleanup.days"))").tag(7)
+                    Text("14 \(L("settings.autoCleanup.days"))").tag(14)
+                    Text("30 \(L("settings.autoCleanup.days"))").tag(30)
+                    Text("60 \(L("settings.autoCleanup.days"))").tag(60)
+                    Text("90 \(L("settings.autoCleanup.days"))").tag(90)
                 }
 
                 Button(role: .destructive) {
                     dataStore.clearAll()
                 } label: {
-                    Label("Limpiar todo el historial", systemImage: "trash")
+                    Label(L("settings.clearAllHistory"), systemImage: "trash")
                 }
             } header: {
-                Text("Historial")
+                Text(L("settings.history"))
             }
 
             Section {
+                Picker(L("settings.language"), selection: $selectedLanguage) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.displayName).tag(language)
+                    }
+                }
+                .onChange(of: selectedLanguage) { _, newValue in
+                    LocalizationManager.shared.setLanguage(newValue)
+                }
+
                 HStack {
-                    Text("Intervalo de monitoreo")
+                    Text(L("settings.monitoringInterval"))
                     Spacer()
                     Text("\(String(format: "%.1f", AppConstants.clipboardPollingInterval))s")
                         .foregroundStyle(.secondary)
                 }
             } header: {
-                Text("Avanzado")
+                Text(L("settings.advanced"))
+            } footer: {
+                Text(L("settings.languageNote"))
+                    .font(.system(size: 10))
             }
         }
         .formStyle(.grouped)
@@ -147,27 +170,27 @@ struct SettingsView: View {
             VStack(spacing: 4) {
                 Text("Paster")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
-                Text("Clipboard Manager para macOS")
+                Text(L("about.clipboardManager"))
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
-                Text("Versión 1.0.0")
+                Text("\(L("about.version")) 1.0.0")
                     .font(.system(size: 11))
                     .foregroundStyle(Color.secondary.opacity(0.5))
             }
 
             VStack(spacing: 8) {
-                featureRow(icon: "clipboard", text: "Historial completo del portapapeles")
-                featureRow(icon: "magnifyingglass", text: "Búsqueda instantánea")
-                featureRow(icon: "chevron.left.forwardslash.chevron.right", text: "Syntax highlighting para código")
-                featureRow(icon: "photo", text: "Previsualización de imágenes y links")
-                featureRow(icon: "keyboard", text: "Acceso rápido con Cmd+Shift+V")
-                featureRow(icon: "tag", text: "Categorías personalizables")
+                featureRow(icon: "clipboard", text: L("about.feature.history"))
+                featureRow(icon: "magnifyingglass", text: L("about.feature.search"))
+                featureRow(icon: "chevron.left.forwardslash.chevron.right", text: L("about.feature.syntax"))
+                featureRow(icon: "photo", text: L("about.feature.preview"))
+                featureRow(icon: "keyboard", text: L("about.feature.shortcut"))
+                featureRow(icon: "tag", text: L("about.feature.categories"))
             }
             .padding(.horizontal, 40)
 
             Spacer()
 
-            Text("Hecho con SwiftUI")
+            Text(L("about.madeWith"))
                 .font(.system(size: 10))
                 .foregroundStyle(Color.secondary.opacity(0.3))
                 .padding(.bottom, 12)

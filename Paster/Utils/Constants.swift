@@ -14,6 +14,7 @@ enum AppConstants {
         static let hotKeyKeyCode = "hotKeyKeyCode"
         static let hotKeyModifiers = "hotKeyModifiers"
         static let autoCleanupDays = "autoCleanupDays"
+        static let appLanguage = "appLanguage"
     }
 
     enum UI {

@@ -25,6 +25,15 @@ mkdir -p "$RESOURCES_DIR"
 # Copiar el binario
 cp "$BUILD_DIR/$APP_NAME" "$MACOS_DIR/$APP_NAME"
 
+# Copiar recursos de localización
+echo "🌍 Copiando archivos de localización..."
+if [ -d "Paster/Resources/en.lproj" ]; then
+    cp -r "Paster/Resources/en.lproj" "$RESOURCES_DIR/"
+fi
+if [ -d "Paster/Resources/es.lproj" ]; then
+    cp -r "Paster/Resources/es.lproj" "$RESOURCES_DIR/"
+fi
+
 # Crear Info.plist
 cat > "$CONTENTS_DIR/Info.plist" << PLIST
 <?xml version="1.0" encoding="UTF-8"?>

@@ -42,7 +42,7 @@ final class ClipboardMonitor {
 
         // Determine the type and content
         if let imageData = extractImage(from: pasteboard) {
-            saveClipItem(content: "Imagen copiada", imageData: imageData, type: .image)
+            saveClipItem(content: L("clip.imageCopied"), imageData: imageData, type: .image)
         } else if let fileURLs = extractFileURLs(from: pasteboard) {
             for url in fileURLs {
                 saveClipItem(content: url.path, type: .file)

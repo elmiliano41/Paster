@@ -40,7 +40,7 @@ struct ClipItemRow: View {
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.type.displayName): \(item.firstLine)")
-        .accessibilityHint("Doble clic para copiar")
+        .accessibilityHint(L("clip.doubleClickToCopy"))
     }
 
     // MARK: - Type Indicator
@@ -72,7 +72,7 @@ struct ClipItemRow: View {
     private var contentPreview: some View {
         switch item.type {
         case .image:
-            Text("Imagen copiada")
+            Text(L("clip.imageCopied"))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)

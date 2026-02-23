@@ -9,7 +9,7 @@ struct HotKeySettingsView: View {
             Section {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Text("Abrir Paster")
+                        Text(L("shortcuts.openPaster"))
                             .font(.system(size: 13, weight: .medium))
 
                         Spacer()
@@ -17,41 +17,41 @@ struct HotKeySettingsView: View {
                         shortcutDisplay
                     }
 
-                    Text("Presiona este atajo en cualquier lugar para abrir la ventana flotante de Paster.")
+                    Text(L("shortcuts.openPasterDesc"))
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 }
             } header: {
-                Text("Atajo global")
+                Text(L("shortcuts.globalShortcut"))
             }
 
             Section {
                 VStack(alignment: .leading, spacing: 8) {
-                    shortcutInfo(keys: "⌘⇧V", description: "Abrir/cerrar ventana flotante")
-                    shortcutInfo(keys: "⌘C", description: "Copiar (automáticamente se guarda)")
-                    shortcutInfo(keys: "↵", description: "Copiar elemento seleccionado")
-                    shortcutInfo(keys: "⌘↵", description: "Copiar y pegar elemento")
-                    shortcutInfo(keys: "⎋", description: "Cerrar ventana")
-                    shortcutInfo(keys: "⌫", description: "Eliminar elemento seleccionado")
-                    shortcutInfo(keys: "⌘F", description: "Enfocar búsqueda")
-                    shortcutInfo(keys: "↑↓", description: "Navegar por el historial")
+                    shortcutInfo(keys: "⌘⇧V", description: L("shortcuts.openCloseWindow"))
+                    shortcutInfo(keys: "⌘C", description: L("shortcuts.copyAuto"))
+                    shortcutInfo(keys: "↵", description: L("shortcuts.copySelected"))
+                    shortcutInfo(keys: "⌘↵", description: L("shortcuts.copyAndPasteItem"))
+                    shortcutInfo(keys: "⎋", description: L("shortcuts.closeWindow"))
+                    shortcutInfo(keys: "⌫", description: L("shortcuts.deleteSelected"))
+                    shortcutInfo(keys: "⌘F", description: L("shortcuts.focusSearch"))
+                    shortcutInfo(keys: "↑↓", description: L("shortcuts.navigateHistory"))
                 }
             } header: {
-                Text("Atajos de teclado")
+                Text(L("shortcuts.keyboardShortcuts"))
             }
 
             Section {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Permisos de accesibilidad")
+                    Text(L("shortcuts.accessibilityPermissions"))
                         .font(.system(size: 13, weight: .medium))
-                    Text("Paster necesita permisos de accesibilidad para registrar atajos globales y simular la acción de pegar. Ve a Preferencias del Sistema → Privacidad y Seguridad → Accesibilidad.")
+                    Text(L("shortcuts.accessibilityDesc"))
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
 
                     Button {
                         openAccessibilityPreferences()
                     } label: {
-                        Label("Abrir Preferencias de Accesibilidad", systemImage: "gear")
+                        Label(L("shortcuts.openAccessibility"), systemImage: "gear")
                             .font(.system(size: 12))
                     }
                     .buttonStyle(.bordered)
@@ -59,7 +59,7 @@ struct HotKeySettingsView: View {
                     .padding(.top, 4)
                 }
             } header: {
-                Text("Permisos")
+                Text(L("shortcuts.permissions"))
             }
         }
         .formStyle(.grouped)
@@ -76,7 +76,7 @@ struct HotKeySettingsView: View {
         } label: {
             HStack(spacing: 4) {
                 if isRecording {
-                    Text("Grabando…")
+                    Text(L("shortcuts.recording"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.orange)
 
@@ -103,7 +103,7 @@ struct HotKeySettingsView: View {
             )
         }
         .buttonStyle(.plain)
-        .help("Haz clic para cambiar el atajo")
+        .help(L("shortcuts.clickToChange"))
     }
 
     private var shortcutKeys: [String] {

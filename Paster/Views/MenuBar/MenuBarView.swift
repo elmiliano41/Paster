@@ -52,7 +52,7 @@ struct MenuBarView: View {
 
             Spacer()
 
-            Text("\(dataStore.clipItems.count) elementos")
+            Text("\(dataStore.clipItems.count) \(L("items.count"))")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
         }
@@ -68,7 +68,7 @@ struct MenuBarView: View {
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
 
-            TextField("Buscar en el historial…", text: $searchText)
+            TextField(L("menubar.searchHistory"), text: $searchText)
                 .textFieldStyle(.plain)
                 .font(.system(size: 13))
 
@@ -96,7 +96,7 @@ struct MenuBarView: View {
         ScrollView {
             LazyVStack(spacing: 2) {
                 if !pinnedItems.isEmpty {
-                    sectionHeader("Fijados", icon: "pin.fill")
+                    sectionHeader(L("section.pinned"), icon: "pin.fill")
                     ForEach(pinnedItems) { item in
                         MenuBarClipRow(
                             item: item,
@@ -114,7 +114,7 @@ struct MenuBarView: View {
 
                 if !recentItems.isEmpty {
                     if !pinnedItems.isEmpty {
-                        sectionHeader("Recientes", icon: "clock")
+                        sectionHeader(L("section.recent"), icon: "clock")
                     }
                     ForEach(recentItems) { item in
                         MenuBarClipRow(
@@ -144,16 +144,16 @@ struct MenuBarView: View {
             Image(systemName: "clipboard")
                 .font(.system(size: 40))
                 .foregroundStyle(Color.secondary.opacity(0.3))
-            Text("Sin contenido aún")
+            Text(L("menubar.noContent"))
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.secondary)
-            Text("Copia algo y aparecerá aquí")
+            Text(L("menubar.copyAndAppear"))
                 .font(.system(size: 12))
                 .foregroundStyle(Color.secondary.opacity(0.6))
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .accessibilityLabel("Historial vacío. Copia algo y aparecerá aquí.")
+        .accessibilityLabel(L("menubar.emptyHistory"))
     }
 
     // MARK: - Footer
@@ -163,7 +163,7 @@ struct MenuBarView: View {
             Button {
                 panelManager.show()
             } label: {
-                Label("Abrir Paster", systemImage: "macwindow")
+                Label(L("menubar.openPaster"), systemImage: "macwindow")
                     .font(.system(size: 12))
             }
             .buttonStyle(.plain)
@@ -174,7 +174,7 @@ struct MenuBarView: View {
             Button {
                 dataStore.clearAllNonPinned()
             } label: {
-                Label("Limpiar", systemImage: "trash")
+                Label(L("action.clear"), systemImage: "trash")
                     .font(.system(size: 12))
             }
             .buttonStyle(.plain)
@@ -276,7 +276,7 @@ struct MenuBarClipRow: View {
                             .foregroundStyle(item.isPinned ? .orange : .secondary)
                     }
                     .buttonStyle(.plain)
-                    .help(item.isPinned ? "Desfijar" : "Fijar")
+                    .help(item.isPinned ? L("action.unpin") : L("action.pin"))
 
                     Button {
                         onDelete()
@@ -286,7 +286,7 @@ struct MenuBarClipRow: View {
                             .foregroundStyle(.red.opacity(0.7))
                     }
                     .buttonStyle(.plain)
-                    .help("Eliminar")
+                    .help(L("action.delete"))
                 }
                 .transition(.opacity.combined(with: .scale(scale: 0.8)))
             }
@@ -304,7 +304,7 @@ struct MenuBarClipRow: View {
         .animation(.easeInOut(duration: 0.15), value: isHovered)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.type.displayName): \(item.firstLine)")
-        .accessibilityHint("Haz clic para copiar")
+        .accessibilityHint(L("clip.clickToCopy"))
     }
 
     private var iconBackground: Color {

@@ -1,0 +1,130 @@
+/* 
+  Localizable.strings (Spanish)
+  Paster
+*/
+
+// MARK: - General
+"app.name" = "Paster";
+"items.count" = "elementos";
+
+// MARK: - Content Types
+"type.text" = "Texto";
+"type.code" = "Código";
+"type.image" = "Imagen";
+"type.link" = "Enlace";
+"type.file" = "Archivo";
+"type.richText" = "Texto Enriquecido";
+
+// MARK: - Floating Panel
+"search.placeholder" = "Buscar…";
+"section.pinned" = "FIJADOS";
+"section.recent" = "RECIENTES";
+"panel.selectItem" = "Selecciona un elemento";
+"panel.toPreview" = "para ver la vista previa";
+"filter.all" = "Todo";
+
+// MARK: - Context Menu & Actions
+"action.copy" = "Copiar";
+"action.copyAndPaste" = "Copiar y Pegar";
+"action.paste" = "Pegar";
+"action.pin" = "Fijar";
+"action.unpin" = "Desfijar";
+"action.delete" = "Eliminar";
+"action.clear" = "Limpiar";
+
+// MARK: - Clip Item
+"clip.imageCopied" = "Imagen copiada";
+"clip.doubleClickToCopy" = "Doble clic para copiar";
+"clip.clickToCopy" = "Haz clic para copiar";
+
+// MARK: - Menu Bar
+"menubar.openPaster" = "Abrir Paster";
+"menubar.searchHistory" = "Buscar en el historial…";
+"menubar.noContent" = "Sin contenido aún";
+"menubar.copyAndAppear" = "Copia algo y aparecerá aquí";
+"menubar.emptyHistory" = "Historial vacío. Copia algo y aparecerá aquí.";
+
+// MARK: - Settings
+"settings.general" = "General";
+"settings.shortcuts" = "Atajos";
+"settings.categories" = "Categorías";
+"settings.about" = "Acerca de";
+
+// MARK: - Settings > General
+"settings.behavior" = "Comportamiento";
+"settings.launchAtLogin" = "Iniciar al arrancar";
+"settings.showPreview" = "Mostrar vista previa en panel flotante";
+"settings.history" = "Historial";
+"settings.maxItems" = "Máximo de elementos";
+"settings.autoCleanup" = "Limpieza automática";
+"settings.autoCleanup.never" = "Nunca";
+"settings.autoCleanup.days" = "días";
+"settings.clearAllHistory" = "Limpiar todo el historial";
+"settings.advanced" = "Avanzado";
+"settings.monitoringInterval" = "Intervalo de monitoreo";
+"settings.language" = "Idioma";
+"settings.languageNote" = "Reinicia la app para que el cambio de idioma surta efecto completo.";
+
+// MARK: - Settings > Shortcuts
+"shortcuts.openPaster" = "Abrir Paster";
+"shortcuts.openPasterDesc" = "Presiona este atajo en cualquier lugar para abrir la ventana flotante de Paster.";
+"shortcuts.globalShortcut" = "Atajo global";
+"shortcuts.keyboardShortcuts" = "Atajos de teclado";
+"shortcuts.recording" = "Grabando…";
+"shortcuts.clickToChange" = "Haz clic para cambiar el atajo";
+"shortcuts.openCloseWindow" = "Abrir/cerrar ventana flotante";
+"shortcuts.copyAuto" = "Copiar (automáticamente se guarda)";
+"shortcuts.copySelected" = "Copiar elemento seleccionado";
+"shortcuts.copyAndPasteItem" = "Copiar y pegar elemento";
+"shortcuts.closeWindow" = "Cerrar ventana";
+"shortcuts.deleteSelected" = "Eliminar elemento seleccionado";
+"shortcuts.focusSearch" = "Enfocar búsqueda";
+"shortcuts.navigateHistory" = "Navegar por el historial";
+"shortcuts.permissions" = "Permisos";
+"shortcuts.accessibilityPermissions" = "Permisos de accesibilidad";
+"shortcuts.accessibilityDesc" = "Paster necesita permisos de accesibilidad para registrar atajos globales y simular la acción de pegar. Ve a Preferencias del Sistema → Privacidad y Seguridad → Accesibilidad.";
+"shortcuts.openAccessibility" = "Abrir Preferencias de Accesibilidad";
+
+// MARK: - Settings > Categories
+"categories.title" = "Categorías";
+"categories.new" = "Nueva";
+"categories.cancel" = "Cancelar";
+"categories.noCategories" = "Sin categorías";
+"categories.createToOrganize" = "Crea categorías para organizar tu historial";
+"categories.categoryName" = "Nombre de la categoría";
+"categories.icon" = "Icono";
+"categories.color" = "Color";
+"categories.saveCategory" = "Guardar categoría";
+"categories.deleteCategory" = "Eliminar categoría";
+"categories.itemsCount" = "%lld elementos";
+
+// MARK: - Settings > About
+"about.clipboardManager" = "Clipboard Manager para macOS";
+"about.version" = "Versión";
+"about.feature.history" = "Historial completo del portapapeles";
+"about.feature.search" = "Búsqueda instantánea";
+"about.feature.syntax" = "Syntax highlighting para código";
+"about.feature.preview" = "Previsualización de imágenes y links";
+"about.feature.shortcut" = "Acceso rápido con Cmd+Shift+V";
+"about.feature.categories" = "Categorías personalizables";
+"about.madeWith" = "Hecho con SwiftUI";
+
+// MARK: - Clip Item Detail
+"detail.info" = "Información";
+"detail.type" = "Tipo";
+"detail.size" = "Tamaño";
+"detail.date" = "Fecha";
+"detail.language" = "Lenguaje";
+"detail.source" = "Origen";
+"detail.category" = "Categoría";
+"detail.noCategory" = "Sin categoría";
+
+// MARK: - Time Ago (if applicable)
+"time.now" = "Ahora";
+"time.minutesAgo" = "hace %lld min";
+"time.hoursAgo" = "hace %lld h";
+"time.daysAgo" = "hace %lld d";
+
+// MARK: - Panel
+"panel.hidePreview" = "Ocultar vista previa";
+"panel.showPreview" = "Mostrar vista previa";
