@@ -56,6 +56,19 @@ final class ClipItem: Identifiable, Codable, Hashable, ObservableObject {
         return line
     }
 
+    /// Preview corto para el toast tras "pegado desde historial" (aprox. 55 caracteres).
+    var toastPreview: String {
+        if type == .image {
+            return L("clip.imageCopied")
+        }
+        let line = content.components(separatedBy: .newlines).first ?? content
+        let maxLen = 55
+        if line.count > maxLen {
+            return String(line.prefix(maxLen)).trimmingCharacters(in: .whitespaces) + "…"
+        }
+        return line.trimmingCharacters(in: .whitespaces)
+    }
+
     // MARK: - Hashable
     static func == (lhs: ClipItem, rhs: ClipItem) -> Bool {
         lhs.id == rhs.id

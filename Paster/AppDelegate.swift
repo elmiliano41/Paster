@@ -5,6 +5,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let dataStore = DataStore()
     let clipboardMonitor = ClipboardMonitor()
     let floatingPanelManager = FloatingPanelManager()
+    let toastManager = ToastManager()
+    lazy var pasteFromHistoryService = PasteFromHistoryService(dataStore: dataStore, toastManager: toastManager)
     private var hotKeyManager: HotKeyManager?
     private var panel: NSPanel?
 
@@ -17,9 +19,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         createFloatingPanel()
 
-        hotKeyManager = HotKeyManager { [weak self] in
-            self?.togglePanel()
-        }
+        hotKeyManager = HotKeyManager(
+            toggleAction: { [weak self] in self?.togglePanel() },
+            pastePreviousAction: { [weak self] in self?.pasteFromHistoryService.pastePrevious() },
+            pasteNextAction: { [weak self] in self?.pasteFromHistoryService.pasteNext() }
+        )
 
         NotificationCenter.default.addObserver(
             forName: .showFloatingPanel, object: nil, queue: .main
@@ -82,6 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showPanel() {
         guard let panel else { return }
+        pasteFromHistoryService.resetIndexToLatest()
         NSApp.activate(ignoringOtherApps: true)
         panel.center()
         panel.makeKeyAndOrderFront(nil)

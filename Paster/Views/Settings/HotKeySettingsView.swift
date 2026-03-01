@@ -1,8 +1,22 @@
 import SwiftUI
+import AppKit
+import HotKey
 
 struct HotKeySettingsView: View {
     @State private var currentShortcut = "⌘⇧V"
     @State private var isRecording = false
+    private static let pasteHistoryDefaultModifiers: NSEvent.ModifierFlags = [.command, .option]
+
+    @State private var pastePreviousShortcut: String = {
+        let k = UserDefaults.standard.object(forKey: AppConstants.Defaults.pastePreviousKeyCode) as? Int
+        let m = UserDefaults.standard.object(forKey: AppConstants.Defaults.pastePreviousModifiers) as? Int
+        return HotKeySettingsView.formatShortcut(keyCode: k, modifiers: m, defaultKey: .k, defaultModifiers: HotKeySettingsView.pasteHistoryDefaultModifiers)
+    }()
+    @State private var pasteNextShortcut: String = {
+        let k = UserDefaults.standard.object(forKey: AppConstants.Defaults.pasteNextKeyCode) as? Int
+        let m = UserDefaults.standard.object(forKey: AppConstants.Defaults.pasteNextModifiers) as? Int
+        return HotKeySettingsView.formatShortcut(keyCode: k, modifiers: m, defaultKey: .j, defaultModifiers: HotKeySettingsView.pasteHistoryDefaultModifiers)
+    }()
 
     var body: some View {
         Form {
@@ -26,8 +40,42 @@ struct HotKeySettingsView: View {
             }
 
             Section {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text(L("shortcuts.pastePrevious"))
+                            .font(.system(size: 13, weight: .medium))
+                        Spacer()
+                        Text(pastePreviousShortcut)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.secondary.opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                    HStack {
+                        Text(L("shortcuts.pasteNext"))
+                            .font(.system(size: 13, weight: .medium))
+                        Spacer()
+                        Text(pasteNextShortcut)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.secondary.opacity(0.15))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                }
+            } header: {
+                Text(L("shortcuts.pasteFromHistory"))
+            } footer: {
+                Text(L("shortcuts.pasteFromHistoryFooter"))
+                    .font(.system(size: 11))
+            }
+
+            Section {
                 VStack(alignment: .leading, spacing: 8) {
                     shortcutInfo(keys: "⌘⇧V", description: L("shortcuts.openCloseWindow"))
+                    shortcutInfo(keys: pastePreviousShortcut, description: L("shortcuts.pastePrevious"))
+                    shortcutInfo(keys: pasteNextShortcut, description: L("shortcuts.pasteNext"))
                     shortcutInfo(keys: "⌘C", description: L("shortcuts.copyAuto"))
                     shortcutInfo(keys: "↵", description: L("shortcuts.copySelected"))
                     shortcutInfo(keys: "⌘↵", description: L("shortcuts.copyAndPasteItem"))
@@ -64,6 +112,20 @@ struct HotKeySettingsView: View {
         }
         .formStyle(.grouped)
         .padding(8)
+        .onAppear {
+            pastePreviousShortcut = HotKeySettingsView.formatShortcut(
+                keyCode: UserDefaults.standard.object(forKey: AppConstants.Defaults.pastePreviousKeyCode) as? Int,
+                modifiers: UserDefaults.standard.object(forKey: AppConstants.Defaults.pastePreviousModifiers) as? Int,
+                defaultKey: .k,
+                defaultModifiers: HotKeySettingsView.pasteHistoryDefaultModifiers
+            )
+            pasteNextShortcut = HotKeySettingsView.formatShortcut(
+                keyCode: UserDefaults.standard.object(forKey: AppConstants.Defaults.pasteNextKeyCode) as? Int,
+                modifiers: UserDefaults.standard.object(forKey: AppConstants.Defaults.pasteNextModifiers) as? Int,
+                defaultKey: .j,
+                defaultModifiers: HotKeySettingsView.pasteHistoryDefaultModifiers
+            )
+        }
     }
 
     // MARK: - Shortcut Display
@@ -126,5 +188,11 @@ struct HotKeySettingsView: View {
     private func openAccessibilityPreferences() {
         let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
         NSWorkspace.shared.open(url)
+    }
+
+    private static func formatShortcut(keyCode: Int?, modifiers: Int?, defaultKey: Key, defaultModifiers: NSEvent.ModifierFlags = [.command, .shift]) -> String {
+        let key = keyCode.flatMap { Key(carbonKeyCode: UInt32($0)) } ?? defaultKey
+        let mods = modifiers.map { NSEvent.ModifierFlags(carbonFlags: UInt32($0)) } ?? defaultModifiers
+        return mods.description + key.description
     }
 }

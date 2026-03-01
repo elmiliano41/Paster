@@ -13,6 +13,10 @@ enum AppConstants {
         static let showPreviewKey = "showPreview"
         static let hotKeyKeyCode = "hotKeyKeyCode"
         static let hotKeyModifiers = "hotKeyModifiers"
+        static let pastePreviousKeyCode = "pastePreviousKeyCode"
+        static let pastePreviousModifiers = "pastePreviousModifiers"
+        static let pasteNextKeyCode = "pasteNextKeyCode"
+        static let pasteNextModifiers = "pasteNextModifiers"
         static let autoCleanupDays = "autoCleanupDays"
         static let appLanguage = "appLanguage"
     }

@@ -86,6 +86,10 @@
 "shortcuts.deleteSelected" = "Delete selected item";
 "shortcuts.focusSearch" = "Focus search";
 "shortcuts.navigateHistory" = "Navigate history";
+"shortcuts.pasteFromHistory" = "Paste from history (no window)";
+"shortcuts.pastePrevious" = "Paste previous clip";
+"shortcuts.pasteNext" = "Paste next clip";
+"shortcuts.pasteFromHistoryFooter" = "Use these shortcuts anywhere to paste an older or newer clip from history. A toast shows a preview of what was pasted.";
 "shortcuts.permissions" = "Permissions";
 "shortcuts.accessibilityPermissions" = "Accessibility permissions";
 "shortcuts.accessibilityDesc" = "Paster needs accessibility permissions to register global shortcuts and simulate paste actions. Go to System Settings → Privacy & Security → Accessibility.";
