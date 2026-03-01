@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 struct MenuBarView: View {
     @Environment(DataStore.self) private var dataStore
@@ -55,6 +56,14 @@ struct MenuBarView: View {
             Text("\(dataStore.clipItems.count) \(L("items.count"))")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
+            Button {
+                NSApplication.shared.terminate(nil)
+            } label: {
+                Image(systemName: "rectangle.portrait.and.arrow.right")
+                    .font(.system(size: 12))
+            } .help(L("action.quit"))
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
@@ -159,38 +168,41 @@ struct MenuBarView: View {
     // MARK: - Footer
 
     private var footerView: some View {
-        HStack(spacing: 12) {
-            Button {
-                panelManager.show()
-            } label: {
-                Label(L("menubar.openPaster"), systemImage: "macwindow")
-                    .font(.system(size: 12))
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
+        VStack(spacing: 0) {
+            HStack(spacing: 12) {
+                Button {
+                    panelManager.show()
+                } label: {
+                    Label(L("menubar.openPaster"), systemImage: "macwindow")
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
 
-            Spacer()
+                Spacer()
 
-            Button {
-                dataStore.clearAllNonPinned()
-            } label: {
-                Label(L("action.clear"), systemImage: "trash")
-                    .font(.system(size: 12))
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
+                Button {
+                    dataStore.clearAllNonPinned()
+                } label: {
+                    Label(L("action.clear"), systemImage: "trash")
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
 
-            Button {
-                openSettings()
-            } label: {
-                Image(systemName: "gear")
-                    .font(.system(size: 12))
+                Button {
+                    openSettings()
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.system(size: 12))
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
+        .background(Color.primary.opacity(0.03))
     }
 
     // MARK: - Section Header
@@ -315,5 +327,33 @@ struct MenuBarClipRow: View {
         case .file: .orange.opacity(0.1)
         default: Color.secondary.opacity(0.08)
         }
+    }
+}
+
+// MARK: - Previews (cambios en tiempo real en Xcode: Editor > Canvas o ⌥⌘↩)
+
+struct MenuBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            MenuBarView()
+                .environment(DataStore())
+                .environment(ClipboardMonitor())
+                .environment(FloatingPanelManager())
+                .previewDisplayName("Menú (vacío)")
+
+            MenuBarView()
+                .environment(previewStoreWithItems)
+                .environment(ClipboardMonitor())
+                .environment(FloatingPanelManager())
+                .previewDisplayName("Menú (con clips)")
+        }
+    }
+
+    private static var previewStoreWithItems: DataStore {
+        let store = DataStore()
+        store.addClipItem(ClipItem(content: "Texto de ejemplo", type: .text))
+        store.addClipItem(ClipItem(content: "https://apple.com", type: .link))
+        store.addClipItem(ClipItem(content: "func foo() { }", type: .code, detectedLanguage: "swift"))
+        return store
     }
 }

@@ -31,6 +31,12 @@
 "action.unpin" = "Desfijar";
 "action.delete" = "Eliminar";
 "action.clear" = "Limpiar";
+"action.formatJSON" = "Formatear JSON";
+"action.minifyJSON" = "Minificar JSON";
+"action.decodeJWT" = "Decodificar JWT";
+"action.decodeBase64" = "Decodificar Base64";
+"action.encodeBase64" = "Codificar Base64";
+"action.quit" = "Salir";
 
 // MARK: - Clip Item
 "clip.imageCopied" = "Imagen copiada";
@@ -118,6 +124,7 @@
 "detail.source" = "Origen";
 "detail.category" = "Categoría";
 "detail.noCategory" = "Sin categoría";
+"detail.actions" = "Acciones";
 
 // MARK: - Time Ago (if applicable)
 "time.now" = "Ahora";

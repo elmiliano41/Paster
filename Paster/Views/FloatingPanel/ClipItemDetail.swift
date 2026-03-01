@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ClipItemDetail: View {
-    let item: ClipItem
+    @ObservedObject var item: ClipItem
     @Environment(DataStore.self) private var dataStore
 
     var body: some View {
@@ -12,6 +12,7 @@ struct ClipItemDetail: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     contentView
+                    devActionsSection
                     metadataView
                 }
                 .padding(16)
@@ -66,6 +67,62 @@ struct ClipItemDetail: View {
         default:
             TextPreview(text: item.content)
         }
+    }
+
+    // MARK: - Dev Actions
+
+    @ViewBuilder
+    private var devActionsSection: some View {
+        if item.type == .text || item.type == .code, !item.content.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(L("detail.actions"))
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        if ClipboardActionsService.looksLikeJSON(item.content) {
+                            actionButton(L("action.formatJSON"), systemImage: "doc.text") {
+                                applyAction { ClipboardActionsService.formatJSON($0) }
+                            }
+                            actionButton(L("action.minifyJSON"), systemImage: "arrow.down.right.and.arrow.up.left") {
+                                applyAction { ClipboardActionsService.minifyJSON($0) }
+                            }
+                        }
+                        if ClipboardActionsService.looksLikeJWT(item.content) {
+                            actionButton(L("action.decodeJWT"), systemImage: "key") {
+                                if let decoded = ClipboardActionsService.decodeJWTToCopyableString(item.content) {
+                                    PasteService.copyString(decoded)
+                                }
+                            }
+                        }
+                        actionButton(L("action.decodeBase64"), systemImage: "lock.open") {
+                            applyAction { ClipboardActionsService.decodeBase64($0) }
+                        }
+                        actionButton(L("action.encodeBase64"), systemImage: "lock") {
+                            applyAction { ClipboardActionsService.encodeBase64($0) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func actionButton(_ title: String, systemImage: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 11, weight: .medium))
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.small)
+    }
+
+    private func applyAction(transform: (String) -> String?) {
+        guard let result = transform(item.content) else { return }
+        item.objectWillChange.send()
+        item.content = result
+        dataStore.updateClipItem(item)
+        PasteService.copyString(result)
     }
 
     // MARK: - Metadata
@@ -187,5 +244,15 @@ struct ClipItemDetail: View {
 
     private func appName(from bundleId: String) -> String {
         bundleId.components(separatedBy: ".").last ?? bundleId
+    }
+}
+
+// MARK: - Previews
+
+struct ClipItemDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        ClipItemDetail(item: ClipItem(content: "{\"key\": \"value\"}", type: .code, detectedLanguage: "json"))
+            .environment(DataStore())
+            .frame(width: 400, height: 500)
     }
 }

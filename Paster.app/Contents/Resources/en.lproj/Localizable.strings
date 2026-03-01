@@ -31,6 +31,12 @@
 "action.unpin" = "Unpin";
 "action.delete" = "Delete";
 "action.clear" = "Clear";
+"action.formatJSON" = "Format JSON";
+"action.minifyJSON" = "Minify JSON";
+"action.decodeJWT" = "Decode JWT";
+"action.decodeBase64" = "Decode Base64";
+"action.encodeBase64" = "Encode Base64";
+"action.quit" = "Quit";
 
 // MARK: - Clip Item
 "clip.imageCopied" = "Copied image";
@@ -118,6 +124,7 @@
 "detail.source" = "Source";
 "detail.category" = "Category";
 "detail.noCategory" = "No category";
+"detail.actions" = "Actions";
 
 // MARK: - Time Ago (if applicable)
 "time.now" = "Just now";
