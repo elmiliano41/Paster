@@ -6,10 +6,12 @@ final class PasteFromHistoryService {
     private var currentIndex: Int = 0
     private let dataStore: DataStore
     private let toastManager: ToastManager
+    private let clipboardMonitor: ClipboardMonitor
 
-    init(dataStore: DataStore, toastManager: ToastManager) {
+    init(dataStore: DataStore, toastManager: ToastManager, clipboardMonitor: ClipboardMonitor) {
         self.dataStore = dataStore
         self.toastManager = toastManager
+        self.clipboardMonitor = clipboardMonitor
     }
 
     /// Llamar al abrir el panel para sincronizar índice con “el más reciente”.
@@ -25,8 +27,9 @@ final class PasteFromHistoryService {
         guard nextIndex != currentIndex else { return }
         currentIndex = nextIndex
         let item = items[currentIndex]
+        clipboardMonitor.suppressNextClipboardAdd()
         PasteService.copyAndPaste(item)
-        toastManager.show(preview: item.toastPreview)
+        toastManager.show(position: currentIndex + 1, total: items.count, preview: item.toastPreviewFourLines)
     }
 
     /// Pegar el clip siguiente en el historial (más reciente) y mostrar toast.
@@ -37,7 +40,8 @@ final class PasteFromHistoryService {
         guard nextIndex != currentIndex else { return }
         currentIndex = nextIndex
         let item = items[currentIndex]
+        clipboardMonitor.suppressNextClipboardAdd()
         PasteService.copyAndPaste(item)
-        toastManager.show(preview: item.toastPreview)
+        toastManager.show(position: currentIndex + 1, total: items.count, preview: item.toastPreviewFourLines)
     }
 }

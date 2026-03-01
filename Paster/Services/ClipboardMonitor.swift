@@ -7,6 +7,7 @@ final class ClipboardMonitor {
     private(set) var isMonitoring: Bool = false
     private var timer: Timer?
     private var dataStore: DataStore?
+    private var shouldSuppressNextAdd: Bool = false
 
     var latestClipContent: String?
     var latestClipType: ClipItemType = .text
@@ -33,12 +34,21 @@ final class ClipboardMonitor {
         timer = nil
     }
 
+    func suppressNextClipboardAdd() {
+        shouldSuppressNextAdd = true
+    }
+
     private func checkClipboard() {
         let pasteboard = NSPasteboard.general
         let currentCount = pasteboard.changeCount
 
         guard currentCount != lastChangeCount else { return }
         lastChangeCount = currentCount
+
+        if shouldSuppressNextAdd {
+            shouldSuppressNextAdd = false
+            return
+        }
 
         // Determine the type and content
         if let imageData = extractImage(from: pasteboard) {

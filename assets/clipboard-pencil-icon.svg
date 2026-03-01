@@ -1,0 +1,74 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Bordes redondeados estilo macOS (squircle aproximado) -->
+    <clipPath id="macOSClip">
+      <rect width="512" height="512" rx="115" ry="115" fill="white"/>
+    </clipPath>
+    <linearGradient id="blueGradient" 
+                    x1="0" y1="0" 
+                    x2="0" y2="512"
+                    gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2F6BFF"/>
+      <stop offset="100%" stop-color="#1E4ED8"/>
+    </linearGradient>
+
+    <!-- Mask para el BODY -->
+    <mask id="bodyMask">
+      <rect width="512" height="512" fill="white"/>
+
+      <!-- Recorte top -->
+      <rect x="166" y="70" width="180" height="100" rx="30" fill="black"/>
+      <circle cx="256" cy="80" r="50" fill="black"/>
+
+      <!-- Recorte pencil -->
+      <g transform="rotate(315 380 267)">
+        <rect x="290" y="235" width="180" height="64" rx="30" fill="black"/>
+        <polygon points="290,235 250,267 290,299 330,299 330,235"
+                 fill="black"/>
+      </g>
+    </mask>
+
+    <!-- Mask para el TOP (hoyo pequeno real) -->
+    <mask id="topHoleMask">
+      <rect x="0" y="0" width="512" height="512" fill="white"/>
+      <circle cx="256" cy="80" r="18" fill="black"/>
+    </mask>
+
+  </defs>
+
+  <g clip-path="url(#macOSClip)">
+  <!-- BODY -->
+  <g mask="url(#bodyMask)">
+    <rect x="96" y="120" width="320" height="320" rx="60"
+          fill="none" stroke="url(#blueGradient)" stroke-width="28"/>
+
+    <rect x="168" y="210" width="176" height="18" rx="9"
+          fill="url(#blueGradient)"/>
+    <rect x="168" y="260" width="140" height="18" rx="9"
+          fill="url(#blueGradient)"/>
+    <rect x="168" y="310" width="100" height="18" rx="9"
+          fill="url(#blueGradient)"/>
+  </g>
+
+  <!-- Clipboard top con perforacion real -->
+  <g mask="url(#topHoleMask)">
+    <rect x="176" y="80" width="160" height="80" rx="25"
+          fill="url(#blueGradient)"/>
+    <circle cx="256" cy="80" r="40"
+            fill="url(#blueGradient)"/>
+  </g>
+
+  <!-- Pencil -->
+  <g transform="rotate(315 380 267)">
+    <rect x="300" y="245" width="160" height="44" rx="20"
+          fill="url(#blueGradient)"/>
+    <polygon points="300,245 270,267 300,289 320,289 320,245"
+             fill="url(#blueGradient)"/>
+    <polygon points="300,253 285,265 285,270 300,283"
+             fill="white"/>
+    <rect x="320" y="250" width="100" height="10" rx="5"
+             fill="white" opacity="0.8"/>
+  </g>
+  </g>
+
+</svg>

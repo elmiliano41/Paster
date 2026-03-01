@@ -6,18 +6,23 @@ final class ToastManager {
     private var panel: NSPanel?
     private var hideWorkItem: DispatchWorkItem?
     private let toastDuration: TimeInterval = 1.75
+    private let panelWidth: CGFloat = 420
+    private let lineHeight: CGFloat = 18
+    private let paddingVertical: CGFloat = 12
+    private let positionLineHeight: CGFloat = 16
+    private let spacing: CGFloat = 8
 
-    func show(preview: String) {
+    func show(position: Int, total: Int, preview: String) {
         DispatchQueue.main.async { [weak self] in
             self?.hideWorkItem?.cancel()
-            self?.showToast(text: preview.isEmpty ? " " : preview)
+            self?.showToast(position: position, total: total, text: preview.isEmpty ? " " : preview)
         }
     }
 
-    private func showToast(text: String) {
+    private func showToast(position: Int, total: Int, text: String) {
         if panel == nil {
             let panel = NSPanel(
-                contentRect: NSRect(x: 0, y: 0, width: 400, height: 44),
+                contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: 80),
                 styleMask: [.borderless, .nonactivatingPanel],
                 backing: .buffered,
                 defer: false
@@ -32,18 +37,35 @@ final class ToastManager {
 
         guard let panel else { return }
 
-        let content = Text(text)
-            .font(.system(size: 13, weight: .medium))
-            .lineLimit(2)
-            .truncationMode(.tail)
-            .foregroundStyle(.primary)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
+        let lineCount = min(4, text.components(separatedBy: .newlines).count)
+        let contentHeight = paddingVertical + positionLineHeight + spacing + (lineCount > 0 ? CGFloat(lineCount) * lineHeight : lineHeight) + paddingVertical
+        let panelHeight = max(70, contentHeight)
 
+        let positionLabel = "\(position) / \(total)"
+        let content = VStack(alignment: .leading, spacing: 8) {
+
+            HStack(alignment: .top, spacing: 16) {
+                Text(text)
+                    .font(.system(size: 13, weight: .medium))
+                    .lineLimit(4)
+                    .truncationMode(.tail)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(positionLabel)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 48, alignment: .trailing)
+                    .padding(.top, 2)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
+
+        panel.setContentSize(NSSize(width: panelWidth, height: panelHeight))
         panel.contentView = NSHostingView(rootView: content)
-        panel.contentView?.frame = NSRect(x: 0, y: 0, width: 400, height: 44)
+        panel.contentView?.frame = NSRect(x: 0, y: 0, width: panelWidth, height: panelHeight)
 
         positionPanel(panel)
         panel.orderFrontRegardless()

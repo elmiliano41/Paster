@@ -3,7 +3,7 @@ set -e
 
 APP_NAME="Paster"
 BUNDLE_ID="com.emilianosanchez.paster"
-VERSION="1.1.0"
+VERSION="1.2.0"
 BUILD_DIR=".build/release"
 APP_DIR="$APP_NAME.app"
 CONTENTS_DIR="$APP_DIR/Contents"
@@ -33,6 +33,16 @@ fi
 if [ -d "Paster/Resources/es.lproj" ]; then
     cp -r "Paster/Resources/es.lproj" "$RESOURCES_DIR/"
 fi
+
+ICONSET_SRC="Paster/Resources/Assets.xcassets/AppIcon.appiconset"
+ICONSET_TMP=$(mktemp -d)/AppIcon.iconset
+mkdir -p "$ICONSET_TMP"
+for size in 16 32 128 256 512; do
+  [ -f "$ICONSET_SRC/icon_${size}.png" ] && cp "$ICONSET_SRC/icon_${size}.png" "$ICONSET_TMP/icon_${size}x${size}.png"
+  [ -f "$ICONSET_SRC/icon_${size}@2x.png" ] && cp "$ICONSET_SRC/icon_${size}@2x.png" "$ICONSET_TMP/icon_${size}x${size}@2x.png"
+done
+iconutil -c icns -o "$RESOURCES_DIR/AppIcon.icns" "$ICONSET_TMP"
+rm -rf "$(dirname "$ICONSET_TMP")"
 
 # Crear Info.plist
 cat > "$CONTENTS_DIR/Info.plist" << PLIST

@@ -173,7 +173,7 @@ struct SettingsView: View {
                 Text(L("about.clipboardManager"))
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
-                Text("\(L("about.version")) 1.1.0")
+                Text("\(L("about.version")) \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—")")
                     .font(.system(size: 11))
                     .foregroundStyle(Color.secondary.opacity(0.5))
             }

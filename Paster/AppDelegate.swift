@@ -6,7 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let clipboardMonitor = ClipboardMonitor()
     let floatingPanelManager = FloatingPanelManager()
     let toastManager = ToastManager()
-    lazy var pasteFromHistoryService = PasteFromHistoryService(dataStore: dataStore, toastManager: toastManager)
+    lazy var pasteFromHistoryService = PasteFromHistoryService(dataStore: dataStore, toastManager: toastManager, clipboardMonitor: clipboardMonitor)
     private var hotKeyManager: HotKeyManager?
     private var panel: NSPanel?
 

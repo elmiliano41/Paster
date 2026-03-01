@@ -69,6 +69,23 @@ final class ClipItem: Identifiable, Codable, Hashable, ObservableObject {
         return line.trimmingCharacters(in: .whitespaces)
     }
 
+    var toastPreviewFourLines: String {
+        if type == .image {
+            return L("clip.imageCopied")
+        }
+        let lines = content.components(separatedBy: .newlines)
+        let maxLines = 4
+        let maxPerLine = 60
+        let taken = Array(lines.prefix(maxLines))
+        return taken.map { line in
+            let t = line.trimmingCharacters(in: .whitespaces)
+            if t.count > maxPerLine {
+                return String(t.prefix(maxPerLine)) + "…"
+            }
+            return t
+        }.joined(separator: "\n")
+    }
+
     // MARK: - Hashable
     static func == (lhs: ClipItem, rhs: ClipItem) -> Bool {
         lhs.id == rhs.id

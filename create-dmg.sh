@@ -28,9 +28,15 @@ if command -v create-dmg &>/dev/null; then
     if [ ! -f "$DMG_RESOURCES/background.png" ]; then
         swift "$SCRIPT_DIR/$DMG_RESOURCES/generate-background.swift"
     fi
+    VOL_ICON="$APP_NAME.app/Contents/Resources/AppIcon.icns"
+    VOLICON_ARG=""
+    if [ -f "$VOL_ICON" ]; then
+        VOLICON_ARG="--volicon $VOL_ICON"
+    fi
     echo "🖼️  Creando DMG con fondo e iconos..."
     create-dmg \
         --volname "$VOLUME_NAME" \
+        $VOLICON_ARG \
         --window-size 540 380 \
         --window-pos 200 120 \
         --icon-size 96 \
